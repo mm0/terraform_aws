@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# User Variables
+export TF_VAR_organization=lawtech
+export TF_VAR_module_name="lawhub"
+export TF_VAR_nextcloud_backup_bucket_name="${TF_VAR_organization}-${TF_VAR_module_name}-db-backups"
+export TF_VAR_provider="aws"
+export TF_VAR_aws_profile="nextcloud"
+export TF_VAR_aws_region="us-east-1"
+export AWS_REGION="${TF_VAR_aws_region}"
+export AWS_PROFILE="${TF_VAR_aws_profile}"
+export TF_VAR_availability_zone="us-east-1a"
+export TF_VAR_ami="ami-09b3691f" # ubuntu 16.04 LTS (hvm:ebs)
+export TF_VAR_internal_dns_main_zone_domain="nextcloud.internal"
+export TF_VAR_internal_subdomain="prod"
+export TF_VAR_aws_key_name="${TF_VAR_organization}-${TF_VAR_module_name}"
+export TF_VAR_instance_type="t2.nano"
+export TF_VAR_my_ip_address="127.0.0.1"
+export TF_VAR_vpc_name="${organization}_vpc"
+export TF_VAR_vpc_cidr="172.27.0.0/16"
+export TF_VAR_ssh_public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQA..."
+export TF_VAR_destination_ansible_hosts_file="../../Ansible/hosts/AWS"
+export TF_VAR_public_subnet_cidr="172.27.1.0/24"
+export TF_VAR_domain="*.domain.com" # Used for ACM
+export TF_VAR_ec2_iam_instance_profile="${TF_VAR_organization}_nextcloud_ec2_iam_instance_profile"
+export TF_VAR_iam_role="${TF_VAR_organization}_nextcloud_ec2_role"
+export TF_VAR_server_name="${TF_VAR_organization} - Nextcloud"
+

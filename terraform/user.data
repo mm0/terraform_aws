@@ -1,0 +1,20 @@
+<?php
+
+// Connect to db
+$endpoint = ${endpoint};
+$username = ${username};
+$password = ${password};
+$db = ${db};
+
+// If it doesn't exist, create the "simple" table with an auto increment id and a field called entry_time that's the current timestamp.
+
+// Add an entry into the simple table
+
+// Get all entries in the simple table
+
+// Print out all the entries
+
+?>
+
+php -S 0.0.0.0 8000
+
