@@ -7,7 +7,8 @@ variable "name"                  {}
 variable "username"              {}
 variable "password"              {}
 variable "parameter_group_name"  {}
-
+variable "db_subnet_group_name"  {}
+variable "vpc_security_group_ids"  { type="list" }
 resource "aws_db_instance" "default" {
   allocated_storage    = "${var.allocated_storage}"   
   storage_type         = "${var.storage_type}"        
@@ -18,6 +19,9 @@ resource "aws_db_instance" "default" {
   username             = "${var.username}"            
   password             = "${var.password}"            
   parameter_group_name = "${var.parameter_group_name}"
+  db_subnet_group_name = "${var.db_subnet_group_name}"
+  skip_final_snapshot =  true
+  vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
 }
 
 output "endpoint" {

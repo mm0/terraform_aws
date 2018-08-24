@@ -5,5 +5,5 @@ resource "aws_eip" "ip" {
 }
 
 output "allocation_id" {
-  value = "${aws_eip.ip.allocation_id}"
+  value = "${aws_eip.ip.id}"
 }

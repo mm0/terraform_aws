@@ -1,8 +1,10 @@
-variable "allocation_id" {}
 variable "subnet_id" {}
 
+resource "aws_eip" "ip" {
+  vpc = true
+}
 resource "aws_nat_gateway" "gw" {
-  allocation_id = "${var.allocation_id}"
+  allocation_id = "${aws_eip.ip.id}"
   subnet_id     = "${var.subnet_id}"
 }
 

@@ -1,20 +1,73 @@
+#!/usr/bin/env bash
+# install php, php-mysql
+apt-get update
+apt-get install -yf php php-cli php-mysql mysql-client-core-5.7
+
+# Create/Cat connection script
+cat << 'EOF' > /tmp/connect.php
 <?php
 
 // Connect to db
-$endpoint = ${endpoint};
-$username = ${username};
-$password = ${password};
-$db = ${db};
+$endpoint = "${endpoint}";
+$username = "${username}";
+$password = "${password}";
+$db = "${db}";
+$con = mysqli_connect($endpoint,$username,$password,$db);
+if (!$con) { die('Could not connect: ' . mysqli_error());}
 
 // If it doesn't exist, create the "simple" table with an auto increment id and a field called entry_time that's the current timestamp.
+mysqli_query($con,"CREATE TABLE IF NOT EXISTS `servers`
+    ( `server_id` int(11) NOT NULL AUTO_INCREMENT,
+      `entry_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      `instance_id` VARCHAR(100) NOT NULL DEFAULT '',
+      PRIMARY KEY(`server_id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=latin1" );
 
 // Add an entry into the simple table
+$metadata = `curl http://169.254.169.254/latest/meta-data/instance-id`;
+$escaped = mysqli_real_escape_string($con,$metadata);
+$result = mysqli_query($con, "INSERT INTO servers (instance_id) VALUES('$escaped');");
+mysqli_close($con);
+?>
+EOF
+
+cat << 'EOF' > /tmp/index.php
+<?php
+
+// Connect to db
+$endpoint = "${endpoint}";
+$username = "${username}";
+$password = "${password}";
+$db = "${db}";
+$con = mysqli_connect($endpoint,$username,$password,$db);
+if (!$con) { die('Could not connect: ' . mysqli_error());}
 
 // Get all entries in the simple table
+$result = mysqli_query($con,"SELECT * FROM servers");
+
+echo "<table border='1'>
+<tr>
+<th>Instance ID</th>
+<th>Entry Time</th>
+</tr>";
 
 // Print out all the entries
+while($row = mysqli_fetch_array($result))
+{
+echo "<tr>";
+echo "<td>" . $row['instance_id'] . "</td>";
+echo "<td>" . $row['entry_time'] . "</td>"; echo "</tr>";
+}
+echo "</table>";
+mysqli_close($con);
+
 
 ?>
+EOF
 
-php -S 0.0.0.0 8000
 
+
+# Start Blank Server
+
+cd /tmp
+sudo php -S "0.0.0.0:80"
