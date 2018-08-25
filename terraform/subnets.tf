@@ -1,3 +1,10 @@
+module "public_subnet" {
+  source = "./SUBNET"
+  vpc_id = "${module.VPC.vpc_id}"
+  cidr_block = "${var.public_subnet_cidr}"
+  subnet_availability_zone = "${var.availability_zone}"
+  subnet_name = "${title(var.organization)} - ${title(var.module_name)} - Public Subnet"
+}
 module "database_subnet" {
   source = "./SUBNET"
   cidr_block = "10.20.10.0/24"

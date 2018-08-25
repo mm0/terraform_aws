@@ -18,13 +18,6 @@ module "main_internet_gateway" {
   source = "./IGATEWAY"
   vpc_id = "${module.VPC.vpc_id}"
 }
-module "public_subnet" {
-  source = "./SUBNET"
-  vpc_id = "${module.VPC.vpc_id}"
-  cidr_block = "${var.public_subnet_cidr}"
-  subnet_availability_zone = "${var.availability_zone}"
-  subnet_name = "${title(var.organization)} - ${title(var.module_name)} - Public Subnet"
-}
 module "network_if" {
   source = "./NETWORKINTERFACE"
   subnet_id = "${module.public_subnet.subnet_id}"
@@ -73,18 +66,4 @@ module "main_nacl" {
 #  name = "prod"
 #  strategy = "cluster"
 #}
-module "iam_role" {
-  source = "./IAMROLE"
-  name = "asg_ec2_role"
-}
-resource "aws_iam_instance_profile" "test_profile" {
-  name = "test_profile"
-  role = "${module.iam_role.name}"
-}
-module "app_iam_server_cert" {
-  source = "./IAMSERVERCERT"
-  name_prefix  = "app_server_cert"
-  certificate_body = "${file("cert.cert")}"
-  private_key      = "${file("key.pem")}"
-  create_before_destroy = true
-}
+

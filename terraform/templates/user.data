@@ -70,4 +70,5 @@ EOF
 # Start Blank Server
 
 cd /tmp
+php connect.php
 sudo php -S "0.0.0.0:80"

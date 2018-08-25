@@ -33,13 +33,23 @@ module "app_ec2_sg_rule_egress_https" {
   security_group_id = "${module.app_ec2_sg.id}"
   #source_security_group = "${module.app_ec2_sg.id}"
 }
-module "app_ec2_sg_rule" {
+module "app_ec2_sg_rule_https" {
   source = "./SGRULE"
   description = "allow traffic on port 443"
   type = "ingress"
   #cidr_blocks = []
   from_port = "443"
   to_port = "443"
-  security_group_id = "${module.app_elb_sg.id}"
+  security_group_id = "${module.app_ec2_sg.id}"
+  source_security_group = "${module.app_elb_sg.id}"
+}
+module "app_ec2_sg_rule" {
+  source = "./SGRULE"
+  description = "allow traffic on port 443"
+  type = "ingress"
+  #cidr_blocks = []
+  from_port = "80"
+  to_port = "80"
+  security_group_id = "${module.app_ec2_sg.id}"
   source_security_group = "${module.app_elb_sg.id}"
 }

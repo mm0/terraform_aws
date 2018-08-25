@@ -17,6 +17,7 @@ variable "vpc_name" { }
 variable "iam_role" { }
 variable "public_subnet_cidr" { }
 variable "ec2_iam_instance_profile" { }
+variable "desired_capacity" { default = 1 }
 
 variable "my_ip_address" { }
 variable "ssh_public_key" { }

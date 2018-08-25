@@ -17,8 +17,9 @@ module "app_asg" {
   tag_value = "production"
   max_size = 2
   min_size = 0
+  load_balancers = ["${module.app_elb.name}"]
   name = "APP_ASG"
-  desired_capacity = 1
+  desired_capacity = "${var.desired_capacity}"
   force_delete = "true"
   health_check_type = "ELB"
   health_check_grace_period= "300"

@@ -3,7 +3,7 @@ provider "aws" {
   region = "${var.aws_region}"
 }
 data "template_file" "user_data" {
-  template = "${file("user.data")}"
+  template = "${file("templates/user.data")}"
 
   vars {
     endpoint   = "${module.app_rds.endpoint}"

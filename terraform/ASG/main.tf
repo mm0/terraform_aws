@@ -6,6 +6,7 @@ variable "propagate_at_launch"  {}
 variable "desired_capacity"  {}
 variable "force_delete"  {}
 variable "health_check_type"  {}
+variable "load_balancers"  { type = "list" }
 variable "health_check_grace_period"  {}
 variable "max_size"  {}
 variable "min_size"  {}
@@ -24,16 +25,10 @@ resource "aws_autoscaling_group" "asg" {
   force_delete              = "${var.force_delete}"
   #placement_group           = "${var.placement_group}"
   launch_configuration      = "${var.launch_configuration_name}"
-  availability_zones        = ["${var.availability_zones}"]
+  load_balancers = ["${var.load_balancers}"]
+  # disable avaibility_zones as they should be available via vpc_zone_identifier:  https://github.com/hashicorp/terraform/issues/15810
+  # availability_zones        = ["${var.availability_zones}"]
   vpc_zone_identifier       = ["${var.vpc_zone_identifier}"]
-
-  initial_lifecycle_hook {
-    name                 = "${var.name}"
-    default_result       = "CONTINUE"
-    heartbeat_timeout    = 2000
-    lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
-    #role_arn                = "${var.role_arn}"
-  }
 
   tag {
     key                 = "${var.tag_key}"

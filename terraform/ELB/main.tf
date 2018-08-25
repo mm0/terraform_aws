@@ -19,8 +19,8 @@ resource "aws_elb" "elb" {
     lb_protocol = "http"
   }
   listener {
-    instance_port = 443
-    instance_protocol = "https"
+    instance_port = 80
+    instance_protocol = "http"
     lb_port = 443
     lb_protocol = "https"
     ssl_certificate_id = "${var.ssl_certificate_arn}"
@@ -41,4 +41,9 @@ resource "aws_elb" "elb" {
   }
 }
 
-
+output "name" {
+  value = "${aws_elb.elb.name}"
+}
+output "dns" {
+  value = "${aws_elb.elb.dns_name}"
+}
