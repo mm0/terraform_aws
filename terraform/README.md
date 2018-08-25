@@ -12,8 +12,10 @@ Instructions
 - `terraform plan -out plan`
 - `terraform apply plan`
 - wait up 10 minutes
-- `terraform output -module=app_elb dns`
-- visit previous output to see table with instances
+- visit ELB dns output to see table with instances
+```
+lynx `terraform output -module=app_elb dns`
+```
 
 Templates:
 ---
@@ -81,4 +83,7 @@ Possible Improvements
 - Use APP LB instead of Classic LB
 - Not use /tmp directory for scripts
 - Use KMS for RDS traffic
+- Not hardcode DB Credentials, maybe set as ENV Variable or use vault
+- Use IAM for RDS authentication (though this limits number of connections to RDS and would remove the need to use templates for userdata)
 - Disable direct SSH access to EC2 (implemented for testing)
+
