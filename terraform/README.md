@@ -8,6 +8,8 @@ Instructions
 - Create ssh key and modify/add public key to envSetup.sh
 - Copy ssl private key to `files/key.pem`
 - Copy ssl cert to `files/cert.cert`
+- source the env shell script
+  `source envSetup.sh`
 - `terraform init`
 - `terraform plan -out plan`
 - `terraform apply plan`
@@ -15,6 +17,8 @@ Instructions
 - visit ELB dns output to see table with instances
 ```
 lynx `terraform output -module=app_elb dns`
+lynx https://`terraform output -module=app_elb dns`
+(ssl cert won't be valid since it's pointing to elb dns, press y)
 ```
 
 Templates:
