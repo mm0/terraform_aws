@@ -6,7 +6,7 @@ resource "aws_db_subnet_group" "default" {
   }
 }
 module "app_rds" {
-  source = "./RDS"
+  source = "../modules/AWS/RDS"
   allocated_storage    = 8
   storage_type         = "gp2"
   engine               = "mysql"
@@ -20,13 +20,13 @@ module "app_rds" {
   vpc_security_group_ids = ["${module.rds_sg.id}"]
 }
 module "rds_sg" {
-  source = "./SG"
+  source = "../modules/AWS/SG"
   vpc_id = "${module.VPC.vpc_id}"
   name = "rds_sg"
   description = "Allow 3306 traffic from app servers"
 }
 module "app_rds_sg_rule_ingress" {
-  source = "./SGRULE"
+  source = "../modules/AWS/SGRULE"
   description = "MySQL Access"
   type = "ingress"
   from_port = "3306"
@@ -35,7 +35,7 @@ module "app_rds_sg_rule_ingress" {
   source_security_group = "${module.app_ec2_sg.id}"
 }
 module "app_rds_sg_rule_egress" {
-  source = "./SGRULE"
+  source = "../modules/AWS/SGRULE"
   description = "MySQL Access"
   type = "egress"
   from_port = "3306"

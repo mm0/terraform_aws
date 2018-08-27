@@ -1,5 +1,5 @@
 module "app_launch_config" {
-  source = "./LAUNCHCONFIG"
+  source = "../modules/AWS/LAUNCHCONFIG"
   image_id = "${var.ami}"
   instance_type = "t2.micro"
   iam_instance_profile = "${aws_iam_instance_profile.test_profile.arn}"
@@ -8,7 +8,7 @@ module "app_launch_config" {
   security_groups = ["${module.app_ec2_sg.id}","${module.ssh_sg.id}"]
 }
 module "app_asg" {
-  source = "./ASG"
+  source = "../modules/AWS/ASG"
  # placement groups not compatibility with t2.nano instances
  # placement_group = "${module.placement_group.id}"
   launch_configuration_name = "${module.app_launch_config.name}"

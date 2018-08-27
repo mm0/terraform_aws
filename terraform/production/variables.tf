@@ -17,17 +17,12 @@ variable "vpc_name" { }
 variable "iam_role" { }
 variable "public_subnet_cidr" { }
 variable "ec2_iam_instance_profile" { }
-variable "desired_capacity" { default = 2 }
-
+variable "desired_capacity" { default = 1 }
 variable "my_ip_address" { }
 variable "ssh_public_key" { }
 variable "instance_type" { }
 variable "ami" { }
-variable "destination_ansible_hosts_file" { }
 variable "domain" { }
-variable "server_name" {
-  default = "homesite"
-}
 variable "internal_subdomain" {
   default ="prod"
 }

@@ -1,5 +1,5 @@
 module "app_elb" {
-  source = "./ELB"
+  source = "../modules/AWS/ELB"
   name = "APPELB"
   subnet_ids = ["${module.application_subnet.subnet_id}"]
   security_groups = ["${module.app_elb_sg.id}"]
@@ -10,13 +10,13 @@ module "app_elb" {
   ssl_certificate_arn = "${module.app_iam_server_cert.ssl_certificate_arn}"
 }
 module "app_elb_sg" {
-  source = "./SG"
+  source = "../modules/AWS/SG"
   vpc_id = "${module.VPC.vpc_id}"
   name = "elb_sg"
   description = "ELB Security Group"
 }
 module "app_elb_sg_rule" {
-  source = "./SGRULE"
+  source = "../modules/AWS/SGRULE"
   description = "allow traffic on port 80"
   type = "ingress"
   cidr_blocks = ["0.0.0.0/0"]
@@ -25,7 +25,7 @@ module "app_elb_sg_rule" {
   security_group_id = "${module.app_elb_sg.id}"
 }
 module "app_elb_sg_rule_https" {
-  source = "./SGRULE"
+  source = "../modules/AWS/SGRULE"
   description = "allow traffic on port 80"
   type = "ingress"
   cidr_blocks = ["0.0.0.0/0"]
@@ -34,7 +34,7 @@ module "app_elb_sg_rule_https" {
   security_group_id = "${module.app_elb_sg.id}"
 }
 module "app_elb_sg_rule_egress" {
-  source = "./SGRULE"
+  source = "../modules/AWS/SGRULE"
   description = "allow traffic on port 80"
   type = "egress"
   cidr_blocks = ["0.0.0.0/0"]
@@ -43,7 +43,7 @@ module "app_elb_sg_rule_egress" {
   security_group_id = "${module.app_elb_sg.id}"
 }
 module "app_elb_sg_rule_egress_https" {
-  source = "./SGRULE"
+  source = "../modules/AWS/SGRULE"
   description = "allow traffic on port 80"
   type = "egress"
   cidr_blocks = ["0.0.0.0/0"]
