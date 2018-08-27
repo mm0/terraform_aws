@@ -3,11 +3,12 @@ Instructions
 - Install AWS CLI 
 - Install Terraform
 - Configure ~/.aws/credentials
-- Copy envSetup.sh.template and save to envSetup.sh, then configure
+- Copy envSetup.sh.template and save to `production/envSetup.sh`, then configure
   * `export TF_VAR_profile="wag"` dictates which AWS Profile to use
 - Create ssh key and modify/add public key to envSetup.sh
-- Copy ssl private key to `files/key.pem`
-- Copy ssl cert to `files/cert.cert`
+- Copy ssl private key to `production/files/key.pem`
+- Copy ssl cert to `production/files/cert.cert`
+- `cd production` to environment 
 - source the env shell script
   `source envSetup.sh`
 - `terraform init`
@@ -57,6 +58,10 @@ Files:
   - Associated with 
 
 - main.tf
+  - Configures provider and templates
+
+- ssh.tf
+  - Creates security group to allow SSH access from specified origins
 
 - subnets.tf
   - Creates Database subnet
